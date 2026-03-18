@@ -1,0 +1,60 @@
+-- ============================================
+-- Problem: Students and Examinations (Easy)
+-- ============================================
+
+-- Table: Students
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | student_id    | int     |
+-- | student_name  | varchar |
+-- +---------------+---------+
+--
+-- student_id is the primary key.
+
+-- Table: Subjects
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | subject_name | varchar |
+-- +--------------+---------+
+--
+-- subject_name is the primary key.
+
+-- Table: Examinations
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | student_id   | int     |
+-- | subject_name | varchar |
+-- +--------------+---------+
+--
+-- May contain duplicates.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the number of times each student attended each exam.
+-- Return results ordered by student_id and subject_name.
+-- --------------------------------------------
+
+-- Solution:
+SELECT st.student_id,
+       st.student_name,
+       su.subject_name,
+       COUNT(e.subject_name) AS attended_exams
+FROM Students st
+CROSS JOIN Subjects su
+LEFT JOIN Examinations e
+  ON e.student_id = st.student_id
+ AND e.subject_name = su.subject_name
+GROUP BY st.student_id, st.student_name, su.subject_name
+ORDER BY st.student_id, su.subject_name;
+
+-- --------------------------------------------
+-- Approach:
+-- - CROSS JOIN → generate all student-subject pairs
+-- - LEFT JOIN → attach exam records if they exist
+-- - COUNT → count number of attendances
+-- - GROUP BY → aggregate per student & subject
+-- - ORDER BY → required sorting
+-- --------------------------------------------
