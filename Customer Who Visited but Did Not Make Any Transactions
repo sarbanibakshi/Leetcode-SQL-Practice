@@ -1,0 +1,47 @@
+-- ============================================
+-- Problem: Customer Who Visited but Did Not Make Any Transactions
+-- ============================================
+
+-- Table: Visits
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | visit_id    | int     |
+-- | customer_id | int     |
+-- +-------------+---------+
+--
+-- visit_id is unique.
+
+-- Table: Transactions
+-- +----------------+---------+
+-- | Column Name    | Type    |
+-- +----------------+---------+
+-- | transaction_id | int     |
+-- | visit_id       | int     |
+-- | amount         | int     |
+-- +----------------+---------+
+--
+-- transaction_id is unique.
+
+-- --------------------------------------------
+-- Objective:
+-- Find customer_ids who visited but made NO transactions,
+-- along with the number of such visits.
+-- --------------------------------------------
+
+-- Solution:
+SELECT customer_id,
+       COUNT(visit_id) AS count_no_trans
+FROM Visits
+WHERE visit_id NOT IN (
+    SELECT visit_id
+    FROM Transactions
+)
+GROUP BY customer_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Used subquery to get visit_ids with transactions.
+-- - NOT IN is used to filter visits without any transactions.
+-- - The visits are counted per customer using GROUP BY function.
+-- --------------------------------------------
