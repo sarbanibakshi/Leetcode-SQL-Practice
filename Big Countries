@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: Big Countries
+-- ============================================
+
+-- Table: World
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | name        | varchar |
+-- | continent   | varchar |
+-- | area        | int     |
+-- | population  | int     |
+-- | gdp         | bigint  |
+-- +-------------+---------+
+--
+-- name is the primary key.
+
+-- --------------------------------------------
+-- Problem:
+-- Find the name, population, and area of countries that are "big".
+--
+-- A country is big if:
+-- - area >= 3,000,000
+-- OR
+-- - population >= 25,000,000
+-- --------------------------------------------
+
+-- Solution:
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000
+   OR population >= 25000000;
+
+-- --------------------------------------------
+-- Approach:
+-- - WHERE clause to is used to filter based on conditions.
+-- - OR ensures either condition qualifies the country.
+-- --------------------------------------------
