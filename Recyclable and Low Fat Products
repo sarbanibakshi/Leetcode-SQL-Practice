@@ -1,0 +1,36 @@
+-- ============================================
+-- Problem: Find Low Fat and Recyclable Products
+-- ============================================
+
+-- Table: Products
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | product_id  | int     |
+-- | low_fats    | enum    | ('Y', 'N')
+-- | recyclable  | enum    | ('Y', 'N')
+-- +-------------+---------+
+--
+-- product_id is the primary key.
+-- 'Y' means Yes, 'N' means No.
+
+-- --------------------------------------------
+-- Objective:
+-- Find product_ids that are BOTH low fat AND recyclable.
+-- --------------------------------------------
+
+-- Solution:
+SELECT product_id
+FROM products
+WHERE low_fats = 'Y'
+  AND recyclable = 'Y';
+
+-- --------------------------------------------
+-- Explanation:
+-- Filters rows where:
+-- 1. low_fats = 'Y'  → product is low fat
+-- 2. recyclable = 'Y' → product is recyclable
+--
+-- Only rows satisfying BOTH conditions (AND)
+-- are returned.
+-- --------------------------------------------
