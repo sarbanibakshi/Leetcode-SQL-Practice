@@ -1,0 +1,47 @@
+-- ============================================
+-- Problem: Employee Bonus
+-- ============================================
+
+-- Table: Employee
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | empId       | int     |
+-- | name        | varchar |
+-- | supervisor  | int     |
+-- | salary      | int     |
+-- +-------------+---------+
+--
+-- empId is unique.
+
+-- Table: Bonus
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | empId       | int  |
+-- | bonus       | int  |
+-- +-------------+------+
+--
+-- empId is unique and a foreign key to Employee.
+
+-- --------------------------------------------
+-- Objective:
+-- Report the name and bonus of employees who:
+-- - Have a bonus < 1000
+-- OR
+-- - Do not have any bonus
+-- --------------------------------------------
+
+-- Solution:
+SELECT e.name, b.bonus
+FROM Employee e
+LEFT JOIN Bonus b
+  ON e.empId = b.empId
+WHERE b.bonus < 1000
+   OR b.bonus IS NULL;
+
+-- --------------------------------------------
+-- Approach:
+-- - LEFT JOIN to include all employees from the employee table. LEFT JOIN will help us in getting those employees as well which do not exist in the bonus table.
+-- - Two filters are required for those who don't get any bonus and those who get lower than 1000.
+-- --------------------------------------------
