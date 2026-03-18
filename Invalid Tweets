@@ -1,0 +1,33 @@
+-- ============================================
+-- Problem: Invalid Tweets
+-- ============================================
+
+-- Table: Tweets
+-- +----------------+---------+
+-- | Column Name    | Type    |
+-- +----------------+---------+
+-- | tweet_id       | int     |
+-- | content        | varchar |
+-- +----------------+---------+
+--
+-- tweet_id is the primary key.
+-- content contains alphanumeric characters, '!', or space.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the IDs of tweets that are invalid.
+--
+-- A tweet is invalid if:
+-- - The number of characters in content > 15
+-- --------------------------------------------
+
+-- Solution:
+SELECT tweet_id
+FROM Tweets
+WHERE LENGTH(content) > 15;
+
+-- --------------------------------------------
+-- Approach:
+-- - LENGTH() function is used to count characters in content.
+-- - Greater than sign helps in filtering rows where character length exceeds 15.
+-- --------------------------------------------
