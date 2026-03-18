@@ -1,0 +1,43 @@
+-- ============================================
+-- Problem: Replace Employee ID With The Unique Identifier (Easy)
+-- ============================================
+
+-- Table: Employees
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | id            | int     |
+-- | name          | varchar |
+-- +---------------+---------+
+--
+-- id is the primary key.
+
+-- Table: EmployeeUNI
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | id            | int     |
+-- | unique_id     | int     |
+-- +---------------+---------+
+--
+-- (id, unique_id) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Show the unique ID of each employee.
+-- If an employee does not have a unique ID,
+-- return NULL.
+-- --------------------------------------------
+
+-- Solution:
+SELECT e.name, u.unique_id
+FROM Employees e
+LEFT JOIN EmployeeUNI u
+  ON e.id = u.id;
+
+-- --------------------------------------------
+-- Approach:
+-- - LEFT JOIN ensures all employees are included
+-- - Matching is done using id
+-- - If no match exists, unique_id appears as NULL
+-- --------------------------------------------
