@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: Rising Temperature
+-- ============================================
+
+-- Table: Weather
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | id            | int     |
+-- | recordDate    | date    |
+-- | temperature   | int     |
+-- +---------------+---------+
+--
+-- id is unique.
+-- recordDate values are unique.
+
+-- --------------------------------------------
+-- Objective:
+-- Find all ids where the temperature is higher
+-- than the previous day (yesterday).
+-- --------------------------------------------
+
+-- Solution:
+SELECT current_day.id
+FROM Weather AS current_day
+WHERE EXISTS (
+    SELECT 1
+    FROM Weather AS yesterday
+    WHERE current_day.temperature > yesterday.temperature
+      AND current_day.recordDate = yesterday.recordDate + INTERVAL '1 day'
+);
+
+-- --------------------------------------------
+-- Approach:
+-- - Each row is compared with its previous day
+-- - EXISTS is used to filter out days with temperature that is higher than that on the previous day.
+-- - AND helps in ensuring that both the filter conditions are met.
+-- --------------------------------------------
