@@ -1,0 +1,36 @@
+-- ============================================
+-- Problem: Article Views I
+-- ============================================
+
+-- Table: Views
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | article_id    | int     |
+-- | author_id     | int     |
+-- | viewer_id     | int     |
+-- | view_date     | date    |
+-- +---------------+---------+
+--
+-- No primary key (duplicates may exist).
+-- author_id = viewer_id means author viewed their own article.
+
+-- --------------------------------------------
+-- Objective:
+-- Find all authors who viewed at least one of their own articles.
+--
+-- Return result sorted by id in ascending order.
+-- --------------------------------------------
+
+-- Solution:
+SELECT DISTINCT author_id AS id
+FROM Views
+WHERE author_id = viewer_id
+ORDER BY id;
+
+-- --------------------------------------------
+-- Approach:
+-- - WHERE is used to filter rows where author_id = viewer_id
+-- - Use DISTINCT to remove duplicates
+-- - Results are sorted in ascending order as asked in the question.
+-- --------------------------------------------
