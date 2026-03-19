@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: Not Boring Movies 
+-- ============================================
+
+-- Table: Cinema
+-- +----------------+----------+
+-- | Column Name    | Type     |
+-- +----------------+----------+
+-- | id             | int      |
+-- | movie          | varchar  |
+-- | description    | varchar  |
+-- | rating         | float    |
+-- +----------------+----------+
+--
+-- id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find movies that:
+-- - Have an odd-numbered id
+-- - Have description not equal to "boring"
+--
+-- Return results ordered by rating (descending).
+-- --------------------------------------------
+
+-- Solution:
+SELECT *
+FROM Cinema
+WHERE description != 'boring'
+  AND id % 2 = 1
+ORDER BY rating DESC;
+
+-- --------------------------------------------
+-- Approach:
+-- - Filtering out "boring" movies
+-- - Selecting only odd ids using modulo (%)
+-- - Sorting by rating in descending order
+-- --------------------------------------------
