@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: Managers with at Least 5 Direct Reports (Medium)
+-- ============================================
+
+-- Table: Employee
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | name        | varchar |
+-- | department  | varchar |
+-- | managerId   | int     |
+-- +-------------+---------+
+--
+-- id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find managers who have at least 5 direct reports.
+-- --------------------------------------------
+
+-- Solution:
+SELECT e1.name
+FROM Employee e1
+JOIN (
+    SELECT managerId, COUNT(id) AS direct_reports
+    FROM Employee
+    GROUP BY managerId
+    HAVING COUNT(id) >= 5
+) e2
+  ON e1.id = e2.managerId;
+
+-- --------------------------------------------
+-- Approach:
+-- - Grouping by managerId and counting employees.
+-- - Filtering managers with >= 5 reports.
+-- - Joining to get manager names.
+-- --------------------------------------------
