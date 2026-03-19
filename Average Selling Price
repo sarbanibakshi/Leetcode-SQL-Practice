@@ -1,0 +1,56 @@
+-- ============================================
+-- Problem: Average Selling Price
+-- ============================================
+
+-- Table: Prices
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | product_id    | int     |
+-- | start_date    | date    |
+-- | end_date      | date    |
+-- | price         | int     |
+-- +---------------+---------+
+--
+-- (product_id, start_date, end_date) is the primary key.
+
+-- Table: UnitsSold
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | product_id    | int     |
+-- | purchase_date | date    |
+-- | units         | int     |
+-- +---------------+---------+
+--
+-- May contain duplicates.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the average selling price for each product.
+--
+-- average_price = (total price * units) / total units
+-- If no units sold → average_price = 0
+-- Round to 2 decimal places.
+-- --------------------------------------------
+
+-- Solution:
+SELECT p.product_id,
+       COALESCE(
+           ROUND(SUM(p.price * u.units) / SUM(u.units)::numeric, 2),
+           0
+       ) AS average_price
+FROM Prices p
+LEFT JOIN UnitsSold u
+  ON p.product_id = u.product_id
+ AND u.purchase_date >= p.start_date
+ AND u.purchase_date <= p.end_date
+GROUP BY p.product_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Joining prices with UnitsSold on product_id and matching using the given date ranges as well.
+-- - Computed weighted average using price * units
+-- - Handling NULL (no sales) using COALESCE → 0
+-- - Rounding result to 2 decimal places
+-- --------------------------------------------
