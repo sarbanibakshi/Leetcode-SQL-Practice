@@ -1,0 +1,48 @@
+-- ============================================
+-- Problem: Immediate Food Delivery II
+-- ============================================
+
+-- Table: Delivery
+-- +-----------------------------+---------+
+-- | Column Name                 | Type    |
+-- +-----------------------------+---------+
+-- | delivery_id                 | int     |
+-- | customer_id                 | int     |
+-- | order_date                  | date    |
+-- | customer_pref_delivery_date | date    |
+-- +-----------------------------+---------+
+--
+-- delivery_id is unique.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the percentage of immediate orders among
+-- the first orders of all customers.
+--
+-- Immediate = order_date = customer_pref_delivery_date
+-- Round result to 2 decimal places.
+-- --------------------------------------------
+
+-- Solution:
+SELECT ROUND(
+           SUM(CASE 
+                   WHEN order_date = customer_pref_delivery_date THEN 1 
+                   ELSE 0 
+               END) * 100.0
+           / COUNT(*),
+           2
+       ) AS immediate_percentage
+FROM Delivery
+WHERE (customer_id, order_date) IN (
+    SELECT customer_id, MIN(order_date)
+    FROM Delivery
+    GROUP BY customer_id
+);
+
+-- --------------------------------------------
+-- Approach:
+-- - Identifying first order per customer using MIN(order_date)
+-- - Filtering only those first orders
+-- - Counting immediate orders using CASE WHEN
+-- - Computing percentage and rounding to 2 decimals
+-- --------------------------------------------
