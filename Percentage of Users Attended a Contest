@@ -1,0 +1,50 @@
+-- ============================================
+-- Problem: Percentage of Users Attended a Contest
+-- ============================================
+
+-- Table: Users
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | user_id     | int     |
+-- | user_name   | varchar |
+-- +-------------+---------+
+--
+-- user_id is the primary key.
+
+-- Table: Register
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | contest_id  | int     |
+-- | user_id     | int     |
+-- +-------------+---------+
+--
+-- (contest_id, user_id) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the percentage of users registered in each contest.
+-- - Rounded to 2 decimal places
+-- - Order by percentage DESC, contest_id ASC
+-- --------------------------------------------
+
+-- Solution:
+SELECT contest_id,
+       ROUND(
+           COUNT(user_id) * 100.0 /
+           (SELECT COUNT(*) FROM Users),
+           2
+       ) AS percentage
+FROM Register
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id ASC;
+
+-- --------------------------------------------
+-- Approach:
+-- - Counted users per contest
+-- - Divided by total users
+-- - Multiplied by 100 for percentage
+-- - Rounded to 2 decimal places
+-- - Sorted as required
+-- --------------------------------------------
