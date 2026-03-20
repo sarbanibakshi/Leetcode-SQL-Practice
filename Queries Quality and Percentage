@@ -1,0 +1,43 @@
+-- ============================================
+-- Problem: Queries Quality and Percentage 
+-- ============================================
+
+-- Table: Queries
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | query_name  | varchar |
+-- | result      | varchar |
+-- | position    | int     |
+-- | rating      | int     |
+-- +-------------+---------+
+--
+-- May contain duplicates.
+
+-- --------------------------------------------
+-- Objective:
+-- For each query_name, find:
+-- 1. quality = AVG(rating / position)
+-- 2. poor_query_percentage = % of queries with rating < 3
+--
+-- Round both to 2 decimal places.
+-- --------------------------------------------
+
+-- Solution:
+SELECT query_name,
+       ROUND(AVG(rating::DECIMAL / position)::numeric, 2) AS quality,
+       ROUND(
+           SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END) * 100.0
+           / COUNT(query_name),
+           2
+       ) AS poor_query_percentage
+FROM Queries
+GROUP BY query_name;
+
+-- --------------------------------------------
+-- Approach:
+-- - Computed quality using AVG(rating / position)
+-- - Counted poor queries using CASE WHEN rating < 3
+-- - Converted to percentage using total count
+-- - Rounded both metrics to 2 decimal places
+-- --------------------------------------------
