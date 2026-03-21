@@ -1,0 +1,52 @@
+-- ============================================
+-- Problem: Game Play Analysis IV
+-- ============================================
+
+-- Table: Activity
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | player_id    | int     |
+-- | device_id    | int     |
+-- | event_date   | date    |
+-- | games_played | int     |
+-- +--------------+---------+
+--
+-- (player_id, event_date) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the fraction of players who logged in again
+-- on the day after their first login.
+--
+-- Round result to 2 decimal places.
+-- --------------------------------------------
+
+-- Solution:
+WITH FirstLogins AS (
+    SELECT player_id,
+           MIN(event_date) AS firstlogin
+    FROM Activity
+    GROUP BY player_id
+),
+ImmediateLogins AS (
+    SELECT fl.player_id
+    FROM FirstLogins fl
+    JOIN Activity a
+      ON fl.player_id = a.player_id
+     AND a.event_date = fl.firstlogin + INTERVAL '1 day'
+)
+
+SELECT ROUND(
+           (SELECT COUNT(*) FROM ImmediateLogins)::numeric /
+           (SELECT COUNT(*) FROM FirstLogins)::numeric,
+           2
+       ) AS fraction;
+
+-- --------------------------------------------
+-- Approach:
+-- - Found first login date per player
+-- - Checked if player logged in the next day
+-- - Counted such players
+-- - Divided by total players and rounded result
+-- --------------------------------------------
