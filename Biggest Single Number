@@ -1,0 +1,34 @@
+-- ============================================
+-- Problem: Biggest Single Number
+-- ============================================
+
+-- Table: MyNumbers
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | num         | int  |
+-- +-------------+------+
+--
+-- May contain duplicates.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the largest number that appears only once.
+-- If no such number exists, return NULL.
+-- --------------------------------------------
+
+-- Solution:
+SELECT MAX(num) AS num
+FROM MyNumbers
+WHERE num IN (
+    SELECT num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(num) = 1
+);
+
+-- --------------------------------------------
+-- Approach:
+-- - Grouped by num and filter numbers appearing once
+-- - Used MAX to get the largest among them
+-- - If none exist, result will be NULL
