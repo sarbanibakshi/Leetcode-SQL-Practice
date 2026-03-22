@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: User Activity for the Past 30 Days I
+-- ============================================
+
+-- Table: Activity
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | user_id       | int     |
+-- | session_id    | int     |
+-- | activity_date | date    |
+-- | activity_type | enum    |
+-- +---------------+---------+
+--
+-- May contain duplicates.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the daily active users for the 30-day period
+-- ending on 2019-07-27 (inclusive).
+--
+-- A user is active if they have any activity on that day.
+-- --------------------------------------------
+
+-- Solution:
+SELECT activity_date AS day,
+       COUNT(DISTINCT user_id) AS active_users
+FROM Activity
+WHERE activity_type IN ('open_session', 'end_session', 'scroll_down', 'send_message')
+  AND activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+GROUP BY activity_date;
+
+-- --------------------------------------------
+-- Approach:
+-- - Filtered data within 30-day window
+-- - Counted distinct users per day
+-- - Used GROUP BY activity_date to get active users for the day
+-- --------------------------------------------
