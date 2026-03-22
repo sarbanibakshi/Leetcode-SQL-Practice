@@ -1,0 +1,32 @@
+-- ============================================
+-- Problem: Number of Unique Subjects Taught by Each Teacher
+-- ============================================
+
+-- Table: Teacher
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | teacher_id  | int  |
+-- | subject_id  | int  |
+-- | dept_id     | int  |
+-- +-------------+------+
+--
+-- (subject_id, dept_id) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the number of unique subjects taught
+-- by each teacher.
+-- --------------------------------------------
+
+-- Solution:
+SELECT teacher_id,
+       COUNT(DISTINCT subject_id) AS cnt
+FROM Teacher
+GROUP BY teacher_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Grouped by teacher_id
+-- - Counted distinct subject_id per teacher
+-- --------------------------------------------
