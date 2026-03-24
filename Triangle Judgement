@@ -1,0 +1,41 @@
+-- ============================================
+-- Problem: Triangle Judgement
+-- ============================================
+
+-- Table: Triangle
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | x           | int  |
+-- | y           | int  |
+-- | z           | int  |
+-- +-------------+------+
+--
+-- (x, y, z) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Determine whether three sides can form a triangle.
+--
+-- A triangle is valid if:
+-- - x + y > z
+-- - y + z > x
+-- - x + z > y
+-- --------------------------------------------
+
+-- Solution:
+SELECT *,
+       CASE
+           WHEN x + y > z
+            AND y + z > x
+            AND x + z > y
+           THEN 'Yes'
+           ELSE 'No'
+       END AS triangle
+FROM Triangle;
+
+-- --------------------------------------------
+-- Approach:
+-- - Applied triangle inequality conditions
+-- - Used CASE WHEN to classify each row
+-- --------------------------------------------
