@@ -1,0 +1,51 @@
+-- ============================================
+-- Problem: The Number of Employees Which Report to Each Employee
+-- ============================================
+
+-- Table: Employees
+-- +-------------+----------+
+-- | Column Name | Type     |
+-- +-------------+----------+
+-- | employee_id | int      |
+-- | name        | varchar  |
+-- | reports_to  | int      |
+-- | age         | int      |
+-- +-------------+----------+
+--
+-- employee_id is unique.
+-- reports_to refers to manager's employee_id.
+
+-- --------------------------------------------
+-- Objective:
+-- For each manager, report:
+-- - employee_id
+-- - name
+-- - number of direct reports
+-- - average age of reports (rounded)
+--
+-- Return ordered by employee_id.
+-- --------------------------------------------
+
+-- Solution:
+SELECT e1.employee_id,
+       e1.name,
+       e2.reports_count,
+       e2.average_age
+FROM Employees e1
+JOIN (
+    SELECT reports_to,
+           COUNT(employee_id) AS reports_count,
+           ROUND(AVG(age)) AS average_age
+    FROM Employees
+    GROUP BY reports_to
+) e2
+  ON e1.employee_id = e2.reports_to
+ORDER BY e1.employee_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Grouped employees by reports_to (manager)
+-- - Counted number of reports per manager
+-- - Computed average age and round
+-- - Joined back to get manager details
+-- --------------------------------------------
