@@ -1,0 +1,50 @@
+-- ============================================
+-- Problem: Count Salary Categories
+-- ============================================
+
+-- Table: Accounts
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | account_id  | int  |
+-- | income      | int  |
+-- +-------------+------+
+--
+-- account_id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Count number of accounts in each salary category:
+-- - Low Salary: income < 20000
+-- - Average Salary: 20000 <= income <= 50000
+-- - High Salary: income > 50000
+--
+-- Must return all categories (even if count = 0)
+-- --------------------------------------------
+
+-- Solution:
+SELECT 'Low Salary' AS category,
+       COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income < 20000
+
+UNION ALL
+
+SELECT 'Average Salary' AS category,
+       COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income BETWEEN 20000 AND 50000
+
+UNION ALL
+
+SELECT 'High Salary' AS category,
+       COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income > 50000;
+
+-- --------------------------------------------
+-- Approach:
+-- - Used UNION ALL to return all categories
+-- - Counted rows per category using filters
+-- - Ensured categories appear even if count = 0
+-- --------------------------------------------
