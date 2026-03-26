@@ -1,0 +1,40 @@
+-- ============================================
+-- Problem: Employees With Missing Manager
+-- ============================================
+
+-- Table: Employees
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | employee_id | int     |
+-- | salary      | int     |
+-- | manager_id  | int     |
+-- +-------------+---------+
+--
+-- employee_id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find employees who:
+-- - Have salary < 30000
+-- - Have a manager_id that does NOT exist in Employees
+--
+-- Return results ordered by employee_id.
+-- --------------------------------------------
+
+-- Solution:
+SELECT employee_id
+FROM Employees
+WHERE salary < 30000
+  AND manager_id NOT IN (
+      SELECT employee_id
+      FROM Employees
+  )
+ORDER BY employee_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Filtered employees with salary < 30000
+-- - Used NOT IN to find missing manager references
+-- - Sorted results by employee_id
+-- --------------------------------------------
