@@ -1,0 +1,43 @@
+-- ============================================
+-- Problem: Last Person to Fit in the Bus
+-- ============================================
+
+-- Table: Queue
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | person_id   | int     |
+-- | person_name | varchar |
+-- | weight      | int     |
+-- | turn        | int     |
+-- +-------------+---------+
+--
+-- person_id is unique.
+-- turn defines boarding order.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the name of the last person who can board
+-- the bus without exceeding total weight of 1000.
+-- --------------------------------------------
+
+-- Solution:
+SELECT person_name
+FROM (
+    SELECT person_name,
+           SUM(weight) OVER (
+               ORDER BY turn
+               ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+           ) AS cum_wt
+    FROM Queue
+) 
+WHERE cum_wt <= 1000
+ORDER BY cum_wt DESC
+LIMIT 1;
+
+-- --------------------------------------------
+-- Approach:
+-- - Used window function to compute cumulative weight
+-- - Filtered rows where total weight <= 1000
+-- - Picked the maximum cumulative weight (last valid person)
+-- --------------------------------------------
