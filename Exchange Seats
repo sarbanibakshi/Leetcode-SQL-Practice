@@ -1,0 +1,40 @@
+-- ============================================
+-- Problem: Exchange Seats
+-- ============================================
+
+-- Table: Seat
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | student     | varchar |
+-- +-------------+---------+
+--
+-- id is the primary key.
+-- IDs are continuous starting from 1.
+
+-- --------------------------------------------
+-- Objective:
+-- Swap the seat id of every two consecutive students.
+-- If total students are odd, last student remains unchanged.
+--
+-- Return result ordered by id.
+-- --------------------------------------------
+
+-- Solution:
+SELECT
+       CASE
+           WHEN id % 2 = 1 AND id != (SELECT MAX(id) FROM Seat) THEN id + 1
+           WHEN id % 2 = 0 THEN id - 1
+           ELSE id
+       END AS id,
+       student
+FROM Seat
+ORDER BY id;
+
+-- --------------------------------------------
+-- Approach:
+-- - For odd ids → swap with next (id + 1)
+-- - For even ids → swap with previous (id - 1)
+-- - If last id is odd → keep it unchanged
+-- --------------------------------------------
