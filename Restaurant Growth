@@ -1,0 +1,56 @@
+-- ============================================
+-- Problem: Restaurant Growth
+-- ============================================
+
+-- Table: Customer
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | customer_id   | int     |
+-- | name          | varchar |
+-- | visited_on    | date    |
+-- | amount        | int     |
+-- +---------------+---------+
+--
+-- (customer_id, visited_on) is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Compute 7-day moving total and average revenue.
+--
+-- - Window: current day + previous 6 days
+-- - average_amount rounded to 2 decimal places
+-- - Return ordered by visited_on
+-- --------------------------------------------
+
+-- Solution:
+WITH DailyTotal AS (
+    SELECT visited_on,
+           SUM(amount) AS daily_amount
+    FROM Customer
+    GROUP BY visited_on
+)
+
+SELECT visited_on,
+       SUM(daily_amount) OVER (
+           ORDER BY visited_on
+           RANGE BETWEEN INTERVAL '6 DAYS' PRECEDING AND CURRENT ROW
+       ) AS amount,
+       ROUND(
+           AVG(daily_amount) OVER (
+               ORDER BY visited_on
+               RANGE BETWEEN INTERVAL '6 DAYS' PRECEDING AND CURRENT ROW
+           )::numeric,
+           2
+       ) AS average_amount
+FROM DailyTotal
+ORDER BY visited_on
+OFFSET 6;
+
+-- --------------------------------------------
+-- Approach:
+-- - Aggregated daily revenue first
+-- - Applied 7-day window using RANGE + INTERVAL
+-- - Computed rolling SUM and AVG
+-- - Skipped first 6 days (incomplete window)
+-- --------------------------------------------
