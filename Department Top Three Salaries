@@ -1,0 +1,54 @@
+-- ============================================
+-- Problem: Department Top Three Salaries
+-- ============================================
+
+-- Table: Employee
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | id           | int     |
+-- | name         | varchar |
+-- | salary       | int     |
+-- | departmentId | int     |
+-- +--------------+---------+
+--
+-- Table: Department
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | name        | varchar |
+-- +-------------+---------+
+
+-- --------------------------------------------
+-- Objective:
+-- Find employees whose salary is among the
+-- top 3 unique salaries in their department.
+-- --------------------------------------------
+
+-- Solution:
+WITH Ranking AS (
+    SELECT d.name AS department,
+           e.name AS employee,
+           e.salary AS salary,
+           DENSE_RANK() OVER (
+               PARTITION BY e.departmentId
+               ORDER BY e.salary DESC
+           ) AS rank
+    FROM Department d
+    JOIN Employee e
+      ON d.id = e.departmentId
+)
+
+SELECT department,
+       employee,
+       salary
+FROM Ranking
+WHERE rank <= 3;
+
+-- --------------------------------------------
+-- Approach:
+-- - Used DENSE_RANK() to rank salaries per department
+-- - Handled duplicate salaries using Inner Join.
+-- - Filtered top 3 ranks
+-- --------------------------------------------
