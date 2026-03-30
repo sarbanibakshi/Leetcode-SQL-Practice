@@ -1,0 +1,38 @@
+-- ============================================
+-- Problem: Fix Names in a Table
+-- ============================================
+
+-- Table: Users
+-- +----------------+---------+
+-- | Column Name    | Type    |
+-- +----------------+---------+
+-- | user_id        | int     |
+-- | name           | varchar |
+-- +----------------+---------+
+--
+-- user_id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Convert names such that:
+-- - First character is uppercase
+-- - Remaining characters are lowercase
+--
+-- Return ordered by user_id.
+-- --------------------------------------------
+
+-- Solution:
+SELECT user_id,
+       CONCAT(
+           UPPER(LEFT(name, 1)),
+           LOWER(SUBSTRING(name, 2))
+       ) AS name
+FROM Users
+ORDER BY user_id;
+
+-- --------------------------------------------
+-- Approach:
+-- - Extracted first character → UPPER()
+-- - Converted remaining string → LOWER()
+-- - Combined using CONCAT()
+-- --------------------------------------------
