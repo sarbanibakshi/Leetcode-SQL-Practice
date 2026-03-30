@@ -1,0 +1,37 @@
+-- ============================================
+-- Problem: Delete Duplicate Emails
+-- ============================================
+
+-- Table: Person
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | email       | varchar |
+-- +-------------+---------+
+--
+-- id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Delete duplicate emails, keeping only the row
+-- with the smallest id for each email.
+--
+-- Must use DELETE statement.
+-- --------------------------------------------
+
+-- Solution:
+DELETE
+FROM Person
+WHERE id NOT IN (
+    SELECT MIN(id)
+    FROM Person
+    GROUP BY email
+);
+
+-- --------------------------------------------
+-- Approach:
+-- - Grouped rows by email
+-- - Kept only the smallest id per email
+-- - Deleted all other rows
+-- --------------------------------------------
