@@ -1,0 +1,39 @@
+-- ============================================
+-- Problem: Find Users With Valid E-Mails
+-- ============================================
+
+-- Table: Users
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | user_id       | int     |
+-- | name          | varchar |
+-- | mail          | varchar |
+-- +---------------+---------+
+--
+-- user_id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find users with valid emails.
+--
+-- Rules:
+-- - Prefix:
+--   • Starts with a letter
+--   • Contains letters, digits, '_', '.', '-'
+-- - Domain must be exactly '@leetcode.com'
+-- --------------------------------------------
+
+-- Solution:
+SELECT *
+FROM Users
+WHERE mail ~ '^[a-zA-Z]+[a-zA-Z0-9_.-]*@leetcode\\.com$';
+
+-- --------------------------------------------
+-- Approach:
+-- - Used regex (~) for pattern matching
+-- - ^ ensures start of string
+-- - First char must be a letter
+-- - Allowed characters follow
+-- - Escape '.' in domain using '\\.'
+-- --------------------------------------------
