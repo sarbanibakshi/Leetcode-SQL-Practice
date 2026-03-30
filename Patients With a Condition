@@ -1,0 +1,37 @@
+-- ============================================
+-- Problem: Patients With a Condition
+-- ============================================
+
+-- Table: Patients
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | patient_id   | int     |
+-- | patient_name | varchar |
+-- | conditions   | varchar |
+-- +--------------+---------+
+--
+-- patient_id is the primary key.
+-- conditions contain space-separated codes.
+
+-- --------------------------------------------
+-- Objective:
+-- Find patients with Type I Diabetes.
+--
+-- Condition:
+-- - Code starts with 'DIAB1'
+-- - Can appear at start or after a space
+-- --------------------------------------------
+
+-- Solution:
+SELECT *
+FROM Patients
+WHERE conditions LIKE 'DIAB1%'
+   OR conditions LIKE '% DIAB1%';
+
+-- --------------------------------------------
+-- Approach:
+-- - Matched 'DIAB1' at beginning → 'DIAB1%'
+-- - Matched 'DIAB1' after space → '% DIAB1%'
+-- - Used OR to combine both cases
+-- --------------------------------------------
