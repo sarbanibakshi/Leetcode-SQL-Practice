@@ -1,0 +1,35 @@
+-- ============================================
+-- Problem: Second Highest Salary
+-- ============================================
+
+-- Table: Employee
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | id          | int  |
+-- | salary      | int  |
+-- +-------------+------+
+--
+-- id is the primary key.
+
+-- --------------------------------------------
+-- Objective:
+-- Find the second highest DISTINCT salary.
+-- If it does not exist, return NULL.
+-- --------------------------------------------
+
+-- Solution:
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM Employee
+);
+
+-- --------------------------------------------
+-- Approach:
+-- - Found highest salary
+-- - Filtered out highest salary
+-- - Took MAX of remaining values
+-- - If no value exists → returns NULL
+-- --------------------------------------------
